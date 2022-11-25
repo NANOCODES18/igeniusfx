@@ -18,8 +18,8 @@
                 </thead>
                 
                 <tbody>
-                    @if ($all_ref->count()>0)
-                    @foreach ($all_ref as $ref)
+                    @if ($all_active_ref->count()>0)
+                    @foreach ($all_active_ref as $ref)
                     <tr>
                         <td>
                           <a href="#" class="text-yellow hover-warning">
@@ -27,9 +27,11 @@
                           </a>
 
                         </td>
-                        <td>{{$all_ref->name}}</td>
+                        <td>{{$ref->name}}</td>
 
-                        <td>{{$all_ref->email}}</td>
+                        <td>{{Carbon\Carbon::parse($ref->created_at)->diffForHumans()}}</td>
+
+                        <td>{{$ref->email}}</td>
 
                       </tr>
                     @endforeach

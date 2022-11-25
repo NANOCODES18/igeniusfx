@@ -235,7 +235,7 @@
 
                                         <div class="form-group">
                                             <label>Bitcoin</label>
-                                            <input type="text" class="form-control" name="btc"
+                                            <input type="text" class="form-control" name="btc_address"
                                                 placeholder="Bitcoin Address" value="{{$payments? $payments->btc_address :''}}">
                                         </div>
                                     </div>
@@ -253,6 +253,22 @@
                                             <input type="text" class="form-control" name="paypal"
                                                 placeholder="Paypal Address"
                                                 value="{{$payments? $payments->paypal :''}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <label>usdt</label>
+                                            <input type="text" class="form-control" name="usdt"
+                                                placeholder="usdt Address"
+                                                value="{{$payments? $payments->usdt :''}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <label>xrp</label>
+                                            <input type="text" class="form-control" name="xrp"
+                                                placeholder="xrp Address"
+                                                value="{{$payments? $payments->xrp :''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">

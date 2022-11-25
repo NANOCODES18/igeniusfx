@@ -178,12 +178,12 @@
                                 <div class="about-info-p">
                                     <strong class="text-dark">System Balance</strong>
                                     <br>
-                                    <p class="text-muted">$ {{ $fund->balance }}</p>
+                                    <p class="text-muted">$ {{ $fund->totalbalance }}</p>
                                 </div>
                                 <div class="about-info-p">
                                     <strong class="text-dark">Available Balance</strong>
                                     <br>
-                                    <p class="text-muted">$ {{ $fund->totalbalance }}</p>
+                                    <p class="text-muted">$ {{ $fund->balance }}</p>
                                 </div>
                                 <div class="about-info-p">
                                     <strong class="text-dark">Total Deposits</strong>
@@ -252,17 +252,17 @@
                                                                         data-target="#myModaldepo{{ $loop->index + 1 }}">View</button>
 
 
-                                                                      
-                            <button type="button"
-                            class="btn btn-sm btn-success btn-custom "
-                            value="1167" data-toggle="modal"
-                            data-target="{{$deposit->status > 0? "Completed":"#myModalcomple"}}{{ $loop->index + 1 }}">{{$deposit->status > 0? "Completed":"Mark Complete"}}</button>
+
+                                                                    <button type="button"
+                                                                        class="btn btn-sm btn-success btn-custom "
+                                                                        value="1167" data-toggle="modal"
+                                                                        data-target="{{ $deposit->status > 0 ? 'Completed' : '#myModalcomple' }}{{ $loop->index + 1 }}">{{ $deposit->status > 0 ? 'Completed' : 'Mark Complete' }}</button>
 
 
 
                                                                     <button type="button"
-                                                                        class="btn btn-sm btn-pink btn-custom " value="1167"
-                                                                        data-toggle="modal"
+                                                                        class="btn btn-sm btn-pink btn-custom "
+                                                                        value="1167" data-toggle="modal"
                                                                         data-target="#myModaldel{{ $loop->index + 1 }}">Delete</button>
                                                                 </td>
 
@@ -428,14 +428,16 @@
                                                                             <div class="modal-body">
                                                                                 <h4>Are you sure to mark
                                                                                     ${{ $deposit->amount }} deposit from
-                                                                                    {{ $deposit->name }} as Complete ?</h4>
+                                                                                    {{ $deposit->name }} as Complete ?
+                                                                                </h4>
                                                                             </div>
                                                                             <div class="modal-footer no-border">
                                                                                 <button type="button"
                                                                                     class="btn btn-secondary waves-effect"
                                                                                     data-dismiss="modal">No</button>
-                                                                                <a href="{{ route('approve_deposit',$deposit->id) }}"
-                                                                                    class="btn btn-success waves-effect">Yes Proceed</a>
+                                                                                <a href="{{ route('approve_deposit', $deposit->id) }}"
+                                                                                    class="btn btn-success waves-effect">Yes
+                                                                                    Proceed</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -471,11 +473,11 @@
                                                                         data-target="#myModalwithd{{ $loop->index + 1 }}">View</button>
 
 
-                                                                        <button type="button"
+                                                                    <button type="button"
                                                                         class="btn btn-sm btn-success btn-custom "
                                                                         value="1167" data-toggle="modal"
-                                                                        data-target="{{$withdrawal->status > 0? "Completed":"#myModalpaid"}}{{ $loop->index + 1 }}">{{$withdrawal->status > 0? "Completed":"Mark Paid"}}</button>
-                                            
+                                                                        data-target="{{ $withdrawal->status > 0 ? 'Completed' : '#myModalpaid' }}{{ $loop->index + 1 }}">{{ $withdrawal->status > 0 ? 'Completed' : 'Mark Paid' }}</button>
+
 
 
 
@@ -661,15 +663,20 @@
                                                                             </div>
                                                                             <div class="modal-body">
                                                                                 <h4>Are you sure to mark
-                                                                                    ${{ $withdrawal->amount }} withdrawal from
-                                                                                    {{ $withdrawal->name }} to the {{$withdrawal->account}} {{$withdrawal->methodaccount}}as Complete ?</h4>
+                                                                                    ${{ $withdrawal->amount }} withdrawal
+                                                                                    from
+                                                                                    {{ $withdrawal->name }} to the
+                                                                                    {{ $withdrawal->account }}
+                                                                                    {{ $withdrawal->methodaccount }}as
+                                                                                    Complete ?</h4>
                                                                             </div>
                                                                             <div class="modal-footer no-border">
                                                                                 <button type="button"
                                                                                     class="btn btn-secondary waves-effect"
                                                                                     data-dismiss="modal">No</button>
-                                                                                <a href="{{ route('markwithdrawalpaid',$withdrawal->id) }}"
-                                                                                    class="btn btn-success waves-effect">Yes Proceed</a>
+                                                                                <a href="{{ route('markwithdrawalpaid', $withdrawal->id) }}"
+                                                                                    class="btn btn-success waves-effect">Yes
+                                                                                    Proceed</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -973,74 +980,74 @@
                             </div>
                         </div>
                     </div>
-{{-- 
-make investment for a user --}}
+                    {{-- make investment for a user --}}
 
 
 
-<div class="row">
+                    <div class="row">
 
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header bg-success">
-                <h3 class="card-title text-white">Make Investment for {{ $user->name }}</h3>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-12">
-                        <div class="table-responsive">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header bg-success">
+                                    <h3 class="card-title text-white">Make Investment for {{ $user->name }}</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-12">
+                                            <div class="table-responsive">
 
-                            <div class="transfer-wraper">
-                                <form action="{{ route('admin_make_investment_for_user') }}" method="post">
-                                    @csrf
-                                    <input type="text" hidden name="userid" id="" value="{{$user->id}}">
-                                    <div class="form-group no-mb">
-                                        <label class="form-label">select Plan</label>
-                                        <span class="desc"></span>
+                                                <div class="transfer-wraper">
+                                                    <form action="{{ route('admin_make_investment_for_user') }}"
+                                                        method="post">
+                                                        @csrf
+                                                        <input type="text" hidden name="userid" id=""
+                                                            value="{{ $user->id }}">
+                                                        <div class="form-group no-mb">
+                                                            <label class="form-label">select Plan</label>
+                                                            <span class="desc"></span>
 
-                                        <select name="plan" class="form-control"
-                                            aria-label="Select Plan"
-                                            placeholder="select Investment Plan">
-                                            
-                                            @if ($investmentplans)
-                                         
-                                            @foreach ($investmentplans as $investmentplan)
-                                            <option value="{{$investmentplan->name}}">{{$investmentplan->name}}</option>
-                                                
-                                            @endforeach
-                                                
-                                            @endif
-                                            
-                                          
-                                        </select>
+                                                            <select name="plan" class="form-control"
+                                                                aria-label="Select Plan"
+                                                                placeholder="select Investment Plan">
 
-                                        <label class="form-label">Amount</label>
-                                        <span class="desc"></span>
+                                                                @if ($investmentplans)
+                                                                    @foreach ($investmentplans as $investmentplan)
+                                                                        <option value="{{ $investmentplan->name }}">
+                                                                            {{ $investmentplan->name }}</option>
+                                                                    @endforeach
+                                                                @endif
 
-                                        <div class="input-group mb-10">
-                                            <span class="input-group-addon">$</span>
-                                            <input type="number" name="amount" class="form-control"
-                                                aria-label="Amount (to the nearest dollar)"
-                                                placeholder="enter amount">
 
+                                                            </select>
+
+                                                            <label class="form-label">Amount</label>
+                                                            <span class="desc"></span>
+
+                                                            <div class="input-group mb-10">
+                                                                <span class="input-group-addon">$</span>
+                                                                <input type="number" name="amount" class="form-control"
+                                                                    aria-label="Amount (to the nearest dollar)"
+                                                                    placeholder="enter amount">
+
+                                                            </div>
+
+                                                            <button type="submit"
+                                                                class="btn btn-primary btn-sm btn-rounded mt-20 has-gradient-to-right-bottom"
+                                                                style="width:100%"> make Investment for
+                                                                {{ $user->name }} </button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+
+
+                                            </div>
                                         </div>
-
-                                        <button type="submit"
-                                            class="btn btn-primary btn-sm btn-rounded mt-20 has-gradient-to-right-bottom"
-                                            style="width:100%"> make Investment for {{ $user->name }} </button>
                                     </div>
-                                </form>
-
+                                </div>
                             </div>
-
-
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -1087,14 +1094,14 @@ make investment for a user --}}
                                                                 <tr>
                                                                     <td>{{ $loop->index + 1 }}</td>
                                                                     <td>{{ $investment->investmentplan }}</td>
-                                                                   
+
                                                                     <td>{{ Carbon\Carbon::parse($investment->investmentdate)->diffForHumans() }}
                                                                     </td>
 
                                                                     <td>$ {{ $investment->investmentamount }}</td>
 
                                                                     <td>$ {{ $investment->investmentmaturitydate }}</td>
-                                                                    <td>{{$investment->investmentprofit}}</td>
+                                                                    <td>{{ $investment->investmentprofit }}</td>
                                                                     <td>{{ $investment->investmentStatus > 0 ? 'Complete' : 'Still Running' }}
                                                                     </td>
                                                                     <td>
@@ -1102,25 +1109,27 @@ make investment for a user --}}
                                                                             class="btn btn-sm btn-primary btn-custom "
                                                                             value="1167" data-toggle="modal"
                                                                             data-target="#myModalallinv{{ $loop->index + 1 }}">View</button>
-    
+
                                                                         <button type="button"
-                                                                            class="btn btn-sm btn-pink btn-custom " value="1167"
-                                                                            data-toggle="modal"
+                                                                            class="btn btn-sm btn-pink btn-custom "
+                                                                            value="1167" data-toggle="modal"
                                                                             data-target="#myModalallinvdel{{ $loop->index + 1 }}">Delete</button>
                                                                     </td>
-    
-    
-    
-    
+
+
+
+
                                                                     <!-- The Modal -->
                                                                     <div class="modal fade"
-                                                                        id="myModalallinv{{ $loop->index + 1 }}" role="dialog">
+                                                                        id="myModalallinv{{ $loop->index + 1 }}"
+                                                                        role="dialog">
                                                                         <div class="modal-dialog">
                                                                             <div class="modal-content">
                                                                                 <div class="">
                                                                                     <button type="button"
                                                                                         class="close"
-                                                                                        data-dismiss="modal" aria-label="Close">
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
                                                                                         <span aria-hidden="true">×</span>
                                                                                     </button>
                                                                                 </div>
@@ -1134,27 +1143,34 @@ make investment for a user --}}
                                                                                                     Investment</h3>
                                                                                             </div>
                                                                                             <ul class="list-group">
-                                                                                                <li class="list-group-item">
+                                                                                                <li
+                                                                                                    class="list-group-item">
                                                                                                     <span><b>User</b></span>
                                                                                                     <span
                                                                                                         class="float-right tx-primary">{{ $user->name }}</span>
                                                                                                 </li>
-                                                                                                <li class="list-group-item">
+                                                                                                <li
+                                                                                                    class="list-group-item">
                                                                                                     <span><b>Amount</b></span>
                                                                                                     <span
                                                                                                         class="float-right tx-primary">$
                                                                                                         {{ $investment->investmentamount }}</span>
                                                                                                 </li>
-                                                                                                <li class="list-group-item">
-                                                                                                    <span><b>Plan Name</b></span>
+                                                                                                <li
+                                                                                                    class="list-group-item">
+                                                                                                    <span><b>Plan
+                                                                                                            Name</b></span>
                                                                                                     <span
                                                                                                         class="float-right tx-primary">{{ $investment->investmentplan }}</span>
                                                                                                 </li>
-                                                                                                <li class="list-group-item">
-                                                                                                    <span><b>Invested On</b></span> <span
+                                                                                                <li
+                                                                                                    class="list-group-item">
+                                                                                                    <span><b>Invested
+                                                                                                            On</b></span>
+                                                                                                    <span
                                                                                                         class="float-right tx-primary">{{ Carbon\Carbon::parse($investment->investmentdate)->diffForHumans() }}</span>
                                                                                                 </li>
-                                                                                                
+
                                                                                             </ul>
                                                                                             <div class="card-body">
                                                                                                 <hr>
@@ -1172,19 +1188,18 @@ make investment for a user --}}
                                                                                                 <form method="post"
                                                                                                     action="{{ route('editinvestment') }}">
                                                                                                     @csrf
-                                                                                                    <input type="text" hidden
-                                                                                                        name="userid"
+                                                                                                    <input type="text"
+                                                                                                        hidden name="userid"
                                                                                                         value="{{ $user->id }}"
                                                                                                         class="tex">
-                                                                                                    <input name="name"
-                                                                                                        type="hidden"
-                                                                                                        value="{{ $deposit->name }}">
+
                                                                                                     <input name="id"
                                                                                                         type="hidden"
                                                                                                         value="{{ $investment->id }}">
                                                                                                     <div
                                                                                                         class="form-group">
-                                                                                                        <label>Plan Name</label><br>
+                                                                                                        <label>Plan
+                                                                                                            Name</label><br>
                                                                                                         <input type="text"
                                                                                                             name="investmentplan"
                                                                                                             class="form-control"
@@ -1192,95 +1207,109 @@ make investment for a user --}}
                                                                                                     </div>
                                                                                                     <div
                                                                                                         class="form-group">
-                                                                                                        <label>Plan Percent</label><br>
+                                                                                                        <label>Plan
+                                                                                                            Percent</label><br>
                                                                                                         <input type="text"
                                                                                                             name="investmentpercent"
                                                                                                             class="form-control"
                                                                                                             value="{{ $investment->investmentpercent }}">
                                                                                                     </div>
-                                                                                                <div
-                                                                                                    class="form-group">
-                                                                                                    <label>Investment Date</label><br>
-                                                                                                    <input type="date"
-                                                                                                        name="investmentdate"
-                                                                                                        class="form-control"
-                                                                                                        value="{{ $investment->investmentdate }}">
-                                                                                                </div>
-                                                                                                <div
-                                                                                                class="form-group">
-                                                                                                <label>Investment duration</label><br>
-                                                                                                <input type="text"
-                                                                                                    name="investmentduration"
-                                                                                                    class="form-control"
-                                                                                                    value="{{ $investment->investmentduration }}">
-                                                                                            </div>
-                                                                                            <div
-                                                                                            class="form-group">
-                                                                                            <label>Investment Profit</label><br>
-                                                                                            <input type="text"
-                                                                                                name="investmentprofit"
-                                                                                                class="form-control"
-                                                                                                value="{{ $investment->investmentprofit }}">
-                                                                                        </div>
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label>Investment
+                                                                                                            Date</label><br>
+                                                                                                        <input type="date"
+                                                                                                            name="investmentdate"
+                                                                                                            class="form-control"
+                                                                                                            value="{{ $investment->investmentdate }}">
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label>Investment
+                                                                                                            duration</label><br>
+                                                                                                        <input type="text"
+                                                                                                            name="investmentduration"
+                                                                                                            class="form-control"
+                                                                                                            value="{{ $investment->investmentduration }}">
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label>Investment
+                                                                                                            Profit</label><br>
+                                                                                                        <input type="text"
+                                                                                                            name="investmentprofit"
+                                                                                                            class="form-control"
+                                                                                                            value="{{ $investment->investmentprofit }}">
+                                                                                                    </div>
 
-                                                                                        <div
-                                                                                            class="form-group">
-                                                                                            <label>Investment Total Profit</label><br>
-                                                                                            <input type="text"
-                                                                                                name="investmenttotalprofit"
-                                                                                                class="form-control"
-                                                                                                value="{{ $investment->investmenttotalprofit }}">
-                                                                                        </div>
-                                                                                        
-                                                                                        <div
-                                                                                            class="form-group">
-                                                                                            <label>Investment Maturity Date</label><br>
-                                                                                            <input type="date"
-                                                                                                name="investmentmaturitydate"
-                                                                                                class="form-control"
-                                                                                                value="{{ $investment->investmentmaturitydate }}">
-                                                                                        </div>
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label>Investment
+                                                                                                            Total
+                                                                                                            Profit</label><br>
+                                                                                                        <input type="text"
+                                                                                                            name="investmenttotalprofit"
+                                                                                                            class="form-control"
+                                                                                                            value="{{ $investment->investmenttotalprofit }}">
+                                                                                                    </div>
 
-                                                                                        
-                                                                                        <div
-                                                                                            class="form-group">
-                                                                                            <label>Investment Amount</label><br>
-                                                                                            <input type="text"
-                                                                                                name="investmentamount"
-                                                                                                class="form-control"
-                                                                                                value="{{ $investment->investmentamount }}">
-                                                                                        </div>
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label>Investment
+                                                                                                            Maturity
+                                                                                                            Date</label><br>
+                                                                                                        <input type="date"
+                                                                                                            name="investmentmaturitydate"
+                                                                                                            class="form-control"
+                                                                                                            value="{{ $investment->investmentmaturitydate }}">
+                                                                                                    </div>
 
 
-                                                                                        
-                                                                                         <div
-                                                                                            class="form-group">
-                                                                                            <label>Investment Type</label><br>
-                                                                                            <input type="text"
-                                                                                                name="type"
-                                                                                                class="form-control"
-                                                                                                value="{{ $investment->type }}">
-                                                                                        </div>
-                                                                                        
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label>Investment
+                                                                                                            Amount</label><br>
+                                                                                                        <input type="text"
+                                                                                                            name="investmentamount"
+                                                                                                            class="form-control"
+                                                                                                            value="{{ $investment->investmentamount }}">
+                                                                                                    </div>
 
-                                                                                        
-                                                                                        <div
-                                                                                        class="form-group">
-                                                                                        <label>Already Gotten Profit</label><br>
-                                                                                        <input type="text"
-                                                                                            name="gotteninvestmentprofit"
-                                                                                            class="form-control"
-                                                                                            value="{{ $investment->gotteninvestmentprofit }}">
-                                                                                    </div>
+
+
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label>Investment
+                                                                                                            Type</label><br>
+                                                                                                        <input type="text"
+                                                                                                            name="type"
+                                                                                                            class="form-control"
+                                                                                                            value="{{ $investment->type }}">
+                                                                                                    </div>
+
+
+
+                                                                                                    <div
+                                                                                                        class="form-group">
+                                                                                                        <label>Already
+                                                                                                            Gotten
+                                                                                                            Profit</label><br>
+                                                                                                        <input type="text"
+                                                                                                            name="gotteninvestmentprofit"
+                                                                                                            class="form-control"
+                                                                                                            value="{{ $investment->gotteninvestmentprofit }}">
+                                                                                                    </div>
 
 
 
                                                                                                     <div
                                                                                                         class="text-center">
-                                                                                                        <button type="submit"
+                                                                                                        <button
+                                                                                                            type="submit"
                                                                                                             name="up_am"
-                                                                                                            class="btn btn-success waves-effect waves-light">Update Investment
-                                                                                                            </button>
+                                                                                                            class="btn btn-success waves-effect waves-light">Update
+                                                                                                            Investment
+                                                                                                        </button>
                                                                                                     </div>
                                                                                                 </form>
                                                                                             </div>
@@ -1293,8 +1322,8 @@ make investment for a user --}}
                                                                             </div>
                                                                         </div>
                                                                     </div>
-    
-    
+
+
                                                                     <div id="myModalallinvdel{{ $loop->index + 1 }}"
                                                                         class="modal fade " role="dialog">
                                                                         <div class="modal-dialog">
@@ -1302,14 +1331,16 @@ make investment for a user --}}
                                                                                 <div class="">
                                                                                     <button type="button"
                                                                                         class="close"
-                                                                                        data-dismiss="modal" aria-label="Close">
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
                                                                                         <span aria-hidden="true">×</span>
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body">
-                                                                                    <h4>Are you sure to delete this 
-                                                                                        ${{ $user->name }} 
-                                                                                        {{ $investment->investmentplan }} Investment plan ?</h4>
+                                                                                    <h4>Are you sure to delete this
+                                                                                        ${{ $user->name }}
+                                                                                        {{ $investment->investmentplan }}
+                                                                                        Investment plan ?</h4>
                                                                                 </div>
                                                                                 <div class="modal-footer no-border">
                                                                                     <button type="button"
@@ -1321,19 +1352,19 @@ make investment for a user --}}
                                                                             </div>
                                                                         </div>
                                                                     </div>
-    
-    
+
+
                                                                 </tr>
                                                             @endforeach
                                                         @endif
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1342,6 +1373,74 @@ make investment for a user --}}
                                 </div>
                             </div>
                         </div>
+
+
+
+
+
+
+
+
+
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header bg-primary">
+                                    <h3 class="card-title text-white">EDIT USER BALANCE</h3>
+                                    <H6>please be careful with this</H6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-12">
+                                            <div class="table-responsive">
+                                                <table id="datatable2" class="table table-striped  table-bordered nowrap"
+                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Balance</th>
+                                                            <th>Current Investment</th>
+                                                            <th>Total Profit</th>
+                                                            <th>Current Profit</th>
+                                                            <th>action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <form action="{{ route('editbalance') }}" method="POST">
+                                                            @csrf
+                                                            <tr>
+                                                                <td><input type="number" name="balance"
+                                                                        value="{{ $fund->balance }}">
+                                                                    <input type="text" name="userid" value="{{ $fund->userid }}" hidden id=""></td>
+
+                                                                <td><input type="number" name="currentinvestment"
+                                                                        value="{{ $fund->currentinvestment }}"> </td>
+
+                                                                <td><input type="number" name="totalprofit"
+                                                                        value="{{ $fund->totalprofit }}"> </td>
+
+                                                                <td><input type="number" name="currentprofit"
+                                                                        value="{{ $fund->currentprofit }}"> </td>
+                                                                        
+                                                                        <td><input type="number" name="bonus"
+                                                                        value="{{ $fund->bonus }}"> </td>
+                                                                <td> <button type="submit"
+                                                                        class="btn btn-primary btn-sm">Save</button>
+                                                                </td>
+                                                            </tr>
+                                                        </form>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
 
 
 
@@ -1366,7 +1465,8 @@ make investment for a user --}}
                                         <div class="row">
                                             <div class="col-md-12 col-sm-12 col-12">
                                                 <div class="table-responsive">
-                                                    <table id="datatable" class="table table-striped  table-bordered nowrap"
+                                                    <table id="datatable"
+                                                        class="table table-striped  table-bordered nowrap"
                                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                         <thead>
                                                             <tr>
@@ -1374,7 +1474,7 @@ make investment for a user --}}
                                                                 <th>User Referred Name</th>
                                                                 <th>User Referred email</th>
                                                                 <th>Registration Date</th>
-                                                        
+
                                                                 <th>Mark as Paid/Delete</th>
                                                             </tr>
                                                         </thead>
@@ -1383,28 +1483,28 @@ make investment for a user --}}
                                                                 @foreach ($userrefs as $userref)
                                                                     <tr>
                                                                         <td>{{ $loop->index + 1 }}</td>
-                                                                        <td>{{ $userrefs->name }}</td>
-                                                                        <td>$ {{ $userrefs->email }}</td>
-                                                                        <td>{{ Carbon\Carbon::parse($userrefs->created_at)->diffForHumans() }}
+                                                                        <td>{{ $userref->newusername }}</td>
+                                                                        <td>{{ $userref->newuseremail }}</td>
+                                                                        <td>{{ Carbon\Carbon::parse($userref->created_at)->diffForHumans() }}
                                                                         </td>
-                                                                        
-                                                                        
+
+
                                                                         <td>
                                                                             <button type="button"
                                                                                 class="btn btn-sm btn-primary btn-custom "
                                                                                 value="1167" data-toggle="modal"
-                                                                                data-target="{{$userrefs->refstatus > 0?"#myModalpaid":"#myModalrefpay"}}{{ $loop->index + 1 }}">{{$userrefs->refstatus > 0?"Paid Out":"Mark as Paid"}}</button>
-        
+                                                                                data-target="{{ $userref->status > 0 ? '#myModalpaid' : '#myModalrefpay' }}{{ $loop->index + 1 }}">{{ $userref->status > 0 ? 'Paid Out' : 'Mark as Paid' }}</button>
+
                                                                             <button type="button"
-                                                                                class="btn btn-sm btn-pink btn-custom " value="1167"
-                                                                                data-toggle="modal"
+                                                                                class="btn btn-sm btn-pink btn-custom "
+                                                                                value="1167" data-toggle="modal"
                                                                                 data-target="#myModalrefdel{{ $loop->index + 1 }}">Delete</button>
                                                                         </td>
-        
-        
-        
-        
-        
+
+
+
+
+
 
 
 
@@ -1418,19 +1518,23 @@ make investment for a user --}}
                                                                                     <div class="">
                                                                                         <button type="button"
                                                                                             class="close"
-                                                                                            data-dismiss="modal" aria-label="Close">
-                                                                                            <span aria-hidden="true">×</span>
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">×</span>
                                                                                         </button>
                                                                                     </div>
                                                                                     <div class="modal-body">
-                                                                                        <h4>Mark this referral as paid ?</h4>
+                                                                                        <h4>Mark this referral as paid ?
+                                                                                        </h4>
                                                                                     </div>
                                                                                     <div class="modal-footer no-border">
                                                                                         <button type="button"
                                                                                             class="btn btn-secondary waves-effect"
                                                                                             data-dismiss="modal">No</button>
-                                                                                        <a href="{{ route('payreferral', $userrefs->refid) }}"
-                                                                                            class="btn btn-pink waves-effect">Mark as paid</a>
+                                                                                        <a href="{{ route('payreferral', $userref->refid) }}"
+                                                                                            class="btn btn-pink waves-effect">Mark
+                                                                                            as paid</a>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1444,20 +1548,23 @@ make investment for a user --}}
                                                                                     <div class="">
                                                                                         <button type="button"
                                                                                             class="close"
-                                                                                            data-dismiss="modal" aria-label="Close">
-                                                                                            <span aria-hidden="true">×</span>
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">×</span>
                                                                                         </button>
                                                                                     </div>
                                                                                     <div class="modal-body">
-                                                                                        <h4>Are you sure to delete this referral
-                                                                                            
-                                                                                             ?</h4>
+                                                                                        <h4>Are you sure to delete this
+                                                                                            referral
+
+                                                                                            ?</h4>
                                                                                     </div>
                                                                                     <div class="modal-footer no-border">
                                                                                         <button type="button"
                                                                                             class="btn btn-secondary waves-effect"
                                                                                             data-dismiss="modal">No</button>
-                                                                                        <a href="{{ route('delreferral', $userrefs->refid) }}"
+                                                                                        <a href="{{ route('delreferral', $userref->refid) }}"
                                                                                             class="btn btn-pink waves-effect">Delete</a>
                                                                                     </div>
                                                                                 </div>
@@ -1472,35 +1579,38 @@ make investment for a user --}}
                                                                                     <div class="">
                                                                                         <button type="button"
                                                                                             class="close"
-                                                                                            data-dismiss="modal" aria-label="Close">
-                                                                                            <span aria-hidden="true">×</span>
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">×</span>
                                                                                         </button>
                                                                                     </div>
                                                                                     <div class="modal-body">
-                                                                                        <h4>This referral have been paid</h4>
+                                                                                        <h4>This referral have been paid
+                                                                                        </h4>
                                                                                     </div>
                                                                                     <div class="modal-footer no-border">
                                                                                         <button type="button"
                                                                                             class="btn btn-secondary waves-effect"
                                                                                             data-dismiss="modal">Okay</button>
-                                                                                        
+
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-        
-        
+
+
                                                                     </tr>
                                                                 @endforeach
                                                             @endif
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -1509,65 +1619,65 @@ make investment for a user --}}
                                     </div>
                                 </div>
                             </div>
-        
-        
-        
-        
+
+
+
+
                         </div>
 
 
 
 
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header bg-primary">
-                                <h3 class="card-title text-white">Wallet Address</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-12">
-                                        <div class="table-responsive">
-                                            <table id="datatable2" class="table table-striped  table-bordered nowrap"
-                                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>SN</th>
-                                                        <th>Type</th>
-                                                        <th>Address</th>
-                                                        <th>View/Delete</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header bg-primary">
+                                    <h3 class="card-title text-white">Wallet Address</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-12">
+                                            <div class="table-responsive">
+                                                <table id="datatable2" class="table table-striped  table-bordered nowrap"
+                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SN</th>
+                                                            <th>Type</th>
+                                                            <th>Address</th>
+                                                            <th>View/Delete</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
+
+
                     </div>
-
-
-
-
                 </div>
             </div>
+            <footer class="footer text-right">
+                2022 ©
+            </footer>
+            <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+            <script>
+                function hide_hint() {
+                    $.ajax({
+                        type: "POST",
+                        url: 'ajax.php',
+                        data: 'hide_hint=' + 1,
+                        success: function(data) {
+                            $().html(data);
+                        }
+                    });
+                }
+            </script>
         </div>
-        <footer class="footer text-right">
-            2022 ©
-        </footer>
-        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-        <script>
-            function hide_hint() {
-                $.ajax({
-                    type: "POST",
-                    url: 'ajax.php',
-                    data: 'hide_hint=' + 1,
-                    success: function(data) {
-                        $().html(data);
-                    }
-                });
-            }
-        </script>
-    </div>
-@endsection
+    @endsection

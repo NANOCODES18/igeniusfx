@@ -46,18 +46,18 @@
                                                     @foreach ($allrefs as $userref)
                                                         <tr>
                                                             <td>{{ $loop->index + 1 }}</td>
-                                                            <td>{{ $userrefs->name }}</td>
-                                                            <td>$ {{ $userrefs->email }}</td>
-                                                            <td>{{ Carbon\Carbon::parse($userrefs->created_at)->diffForHumans() }}
+                                                            <td>{{ $userref->name }}</td>
+                                                            <td>$ {{ $userref->email }}</td>
+                                                            <td>{{ Carbon\Carbon::parse($userref->created_at)->diffForHumans() }}
                                                             </td>
-                                                            <td>{{ $userrefs->oldusername }}</td>
-                                                            <td>{{ $userrefs->olduseremail}}</td>
+                                                            <td>{{ $userref->oldusername }}</td>
+                                                            <td>{{ $userref->olduseremail}}</td>
                                                             
                                                             <td>
                                                                 <button type="button"
                                                                     class="btn btn-sm btn-primary btn-custom "
                                                                     value="1167" data-toggle="modal"
-                                                                    data-target="{{$userrefs->refstatus > 0?"#myModalpaid":"#myModalrefpay"}}{{ $loop->index + 1 }}">{{$userrefs->refstatus > 0?"Paid Out":"Mark as Paid"}}</button>
+                                                                    data-target="{{$userref->refstatus > 0?"#myModalpaid":"#myModalrefpay"}}{{ $loop->index + 1 }}">{{$userref->refstatus > 0?"Paid Out":"Mark as Paid"}}</button>
 
                                                                 <button type="button"
                                                                     class="btn btn-sm btn-pink btn-custom " value="1167"
@@ -93,7 +93,7 @@
                                                                             <button type="button"
                                                                                 class="btn btn-secondary waves-effect"
                                                                                 data-dismiss="modal">No</button>
-                                                                            <a href="{{ route('payreferral', $userrefs->refid) }}"
+                                                                            <a href="{{ route('payreferral', $userref->refid) }}"
                                                                                 class="btn btn-pink waves-effect">Mark as paid</a>
                                                                         </div>
                                                                     </div>
@@ -121,7 +121,7 @@
                                                                             <button type="button"
                                                                                 class="btn btn-secondary waves-effect"
                                                                                 data-dismiss="modal">No</button>
-                                                                            <a href="{{ route('delreferral', $userrefs->refid) }}"
+                                                                            <a href="{{ route('delreferral', $userref->refid) }}"
                                                                                 class="btn btn-pink waves-effect">Delete</a>
                                                                         </div>
                                                                     </div>
