@@ -23,79 +23,61 @@
         <div class="row">
             @if (isset($plans) && $plans->count() > 0)
                 @foreach ($plans as $plan)
-                    <div class="col-md-4 col-lg-4 card bg-dark" style="margin-top:5%">
-                        <div class="box box-default pull-up">
-                            <img class="card-card-img-top img-responsive"
-                                src="{{ asset('images/plans/plan' . ($loop->index + 1) . '.png') }}" alt="Card image cap">
-                            <div class="box-body text-center card-body">
-                                <h2 class="box-title card-header"><span>{{ $plan->name }}</span></h2>
-                                <p>
-                                <div class="col-12 col-md-12">
-                                    <div class="box box-body bg-hexagons-white pull-up">
-                                        <div class="media align-items-center p-0">
-                                            <div class="text-center">
-                                                <a href="#"><i class="cc LSK mr-5" title="OMG"></i></a>
-                                            </div>
-                                            <div>
-                                                <h3 class="no-margin text-bold card-text">percent</h3>
-                                                <span>{{ $plan->percentage }}%</span>
-                                            </div>
-                                        </div>
-                                        <div class="flexbox align-items-center mt-25">
-                                            <div>
-                                                <p class="no-margin">Minimum</p>
-                                                <p class="no-margin font-weight-600 text-yellow">
-                                                   ${{ $plan->minimum }}</p>
 
-                                            </div>
-                                            <div class="text-right">
-                                                <p class="no-margin">Maximum</p>
-                                                <p class="no-margin font-weight-600 text-yellow">
-                                                        ${{ $plan->maximum }}</p>
 
-                                            </div>
-                                        </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card " style="padding:0px!important;box-shadow: 0 2px 28px rgb(0 0 0 / 10%);">
+                        <img class="card-img-top" src="{{ asset('images/plans/plan' . ($loop->index + 1) . '.png') }}" alt="Card image cap"> 
+                        <div class="card-body" style="padding:0;">
+                            <h3 class="card-title text-center">{{ $plan->name }}</h3>
+                            <div style="background-image: linear-gradient(to right bottom, #7070db, #24248f)!important;border-radius:7px;">
+                                <h3 class="mb-3 text-center" style="color:white;padding-top: 20px;"> {{ $plan->percentage }}% ROI </h3>
+                                <div class="row" style="color:white;">
+                                    <div class="col-6">
+                                        <h6 class="text-center" >${{ $plan->minimum }}</h6>
+                                        <h6 class="text-center">Minimum</h6>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6 class="text-center">${{ $plan->maximum }}</h6>
+                                        <h6 class="text-center">Maximum</h6>
                                     </div>
                                 </div>
-                                </p>
-                                <p>
-                                <form action="{{ route('dashb_plans') }}" method="POST">
-                                    @csrf
-                                    <input type="text" hidden name="plan" value="{{ $plan->name }}" id="">
-                                    <div class="form-group">
-                                        <label>Select Duration</label>
-                                        <select name="duration" class="form-control form-select">
-                                            <option value="1">1 Week</option>
-                                            <option value="2">2 Weeks</option>
-                                            <option value="3">3 Weeks</option>
-                                            <option selected value="4">4 Weeks</option>
-                                            <option value="5">5 Weeks</option>
-                                        </select>
-                                    </div>
-                                    </p>
-                                    <p>
-                                    <div class="input-group">
-                                        <div class="input-group-text" id="inputGroup-sizing-sm">
-                                            <button type="button" class="btn btn-info btn-sm">Amount</button>
+                                <div class="row">
+                                    <div class="col-10 offset-md-1">
+                                        <form action="{{ route('dashb_plans') }}" method="POST">
+                                            @csrf
+                                            <input type="text" hidden name="plan" value="{{ $plan->name }}" id="">
+                                        <div class="form-group no-mb">
+                                            <label class="text-center" style="color:white;font-weight:700;display:block;">Select Duration</label>
+                                            <span class="desc"></span>
+        
+                                            <select class="form-control mb-4" aria-label="Duration" placeholder="Select Duration">
+                                                <option value="30">{{ $plan->noofrepeat }} days</option>
+                                            </select>
+        
+                                            <span class="desc"></span>
+        
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">Amount</span>
+                                                </div>
+                                                <input type="number" class="form-control" name="amount" placeholder="Enter Amount" aria-label="Amount" aria-describedby="basic-addon1">
+                                                
+                                            </div>
+        
+                                            <button type="submit" class="btn btn-primary mt-20" style="width:100%"> Proceed With Investment </button>
                                         </div>
-                                        <!-- /btn-group -->
-                                        <input type="number" placeholder="Amount" name="amount" value=""
-                                            class="form-control">
+                                    </form>
                                     </div>
-                                    </p>
-                                    <div class="input-group">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary ">Proceed with Investment <i
-                                                    class="fa fa-bag"></i></button>
-                                        </div>
-                                    </div>
-
-                                </form>
+                                </div>
                             </div>
-                            <!-- /.box-body -->
                         </div>
-                        <!-- /.box -->
                     </div>
+                </div>
+
+
+
+
                 @endforeach
             @else
                 <div class="col-md-12 col-lg-12">

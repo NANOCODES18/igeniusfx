@@ -14,7 +14,7 @@
                 @csrf
             <div class="mb-4">
                 <label class="my-1 me-2" for="">Email</label>
-                <input type="email" class="form-control" id="amount" name="beneficiary" placeholder="Enter Beneficiary Email" aria-describedby="amount"><br>
+                <input type="email" class="form-control" id="amount" name="email" placeholder="Enter Beneficiary Email" aria-describedby="email"><br>
                
             </div>
 

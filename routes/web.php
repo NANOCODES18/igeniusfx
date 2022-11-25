@@ -97,6 +97,7 @@ Route::get('/bonus_view', [App\Http\Controllers\adminController::class, 'bonus_v
 
 Route::get('/bonus_send', [App\Http\Controllers\adminController::class, 'bonus_send'])->name('bonus_send');
 
+
 //penalty send
 //penalty
 Route::get('/penalty_view_id/{id}', [App\Http\Controllers\adminController::class, 'penalty_view_id'])->name('penalty_view_id');
@@ -210,7 +211,7 @@ Route::get('/cards', [App\Http\Controllers\adminController::class, 'cards'])->na
 
 
 // //manipulate user balances
-// Route::post('/editbalance', [App\Http\Controllers\adminController::class, 'editbalance'])->name('editbalance');
+Route::post('/editbalance', [App\Http\Controllers\adminController::class, 'editbalance'])->name('editbalance');
 
 
 

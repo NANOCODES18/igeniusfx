@@ -33,6 +33,10 @@ class Userdashcontroller extends Controller
     {
         $this->middleware('auth');
         $logged_in_user = Auth::user();
+        if (Auth::user()->blocked >0) {
+            # code...
+            return redirect()->route("index")->with("error","your account is blocked");
+        }
     }
 
     public function logged_in_user()
@@ -145,7 +149,7 @@ class Userdashcontroller extends Controller
                     if ($today->greaterThan($dday)) {
                         # code...
                         $inv->gotteninvestmentprofit = $inv->gotteninvestmentprofit  + $inv->investmentprofit;
-                        unset($days_profit_array['day_profit']);
+                        unset($days_profit_array->$key);
                         $days_string = json_encode($days_profit_array);
                         $inv->stage = $days_string;
                         $inv->save();
@@ -357,6 +361,11 @@ if ( $card->save()) {
             if ($user_funds->transfer > 0) {
                 # code...
                 $user_beneficiary = User::where('email', $benficiary_email)->first();
+                if ($user_beneficiary->count() <1){
+
+                    return back()->with("error", 'Email does not belong to any user!');
+
+                }
 
                 $beneficiary_funds = Fund::where('userid', $user_beneficiary->id)->first();
 
@@ -700,6 +709,7 @@ if ( $card->save()) {
                     # code...
                     $user_fund->pendingwithdrawal = $user_fund->pendingwithdrawal + $amount;
                     $user_fund->totalwithdrawal = $user_fund->totalwithdrawal + $amount;
+                    $user_fund->balance =  $user_fund->balance - $amount;
                     $user_fund->save();
 
                     $domain = request()->getHost();
